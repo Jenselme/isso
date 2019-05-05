@@ -62,14 +62,14 @@ function delete_com(com_id, hash, isso_host_script) {
 function unset_editable(elt_id) {
     var elt = document.getElementById(elt_id);
     if (elt) {
-      elt.contentEditable = false;
+      elt.disabled = true;
       elt.classList.remove("editable");
     }
 }
 function set_editable(elt_id) {
     var elt = document.getElementById(elt_id);
     if (elt) {
-      elt.contentEditable = true;
+      elt.disabled = false;
       elt.classList.add("editable");
     }
 }
@@ -101,7 +101,7 @@ function send_edit(com_id, hash, isso_host_script) {
     var author = document.getElementById('isso-author-' + com_id).textContent;
     var email = document.getElementById('isso-email-' + com_id).textContent;
     var website = document.getElementById('isso-website-' + com_id).textContent;
-    var comment = document.getElementById('isso-text-' + com_id).textContent;
+    var comment = document.getElementById('isso-text-' + com_id).value;
     edit(com_id, hash, author, email, website, comment, isso_host_script);
     stop_edit(com_id);
 }
@@ -223,7 +223,7 @@ function send_edit(com_id, hash, isso_host_script) {
         {% if comment.mode == 4 %}
           <strong>HIDDEN</strong>. Original text: <br />
         {% endif %}
-        <div id="isso-text-{{comment.id}}">{{comment.text}}</div>
+        <textarea id="isso-text-{{comment.id}}" disabled="true" rows="10">{{comment.text}}</textarea>
       </div>
       <div class='isso-comment-footer'>
         {% if conf.votes and comment.likes - comment.dislikes != 0 %}
